@@ -1,4 +1,4 @@
-package com.jungdo.security.services.impl;
+package com.jungdo.service.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jungdo.entity.User;

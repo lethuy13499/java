@@ -1,6 +1,6 @@
 package com.jungdo.security.jwt;
 
-import com.jungdo.security.services.impl.UserDetailsImpl;
+import com.jungdo.service.impl.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

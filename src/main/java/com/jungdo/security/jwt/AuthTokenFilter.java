@@ -1,6 +1,5 @@
 package com.jungdo.security.jwt;
-
-import com.jungdo.security.services.impl.UserDetailsServiceImpl;
+import com.jungdo.service.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

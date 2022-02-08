@@ -10,9 +10,10 @@ import com.jungdo.payload.response.MessageResponse;
 import com.jungdo.repository.RoleRepository;
 import com.jungdo.repository.AuthRepository;
 import com.jungdo.security.jwt.JwtUtils;
-import com.jungdo.security.services.impl.UserDetailsImpl;
-import com.jungdo.security.services.UserService;
+import com.jungdo.service.UserService;
+import com.jungdo.service.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,13 +31,13 @@ import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
-    AuthRepository userRepository;
+    AuthRepository authRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -72,13 +74,13 @@ public class UserController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (authRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (authRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
@@ -116,12 +118,25 @@ public class UserController {
         }
 
         user.setRoles(roles);
-        userRepository.save(user);
+        authRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
     @GetMapping("/user/{id}")
-    public ResponseEntity<?> getStuffById(@PathVariable Long id) throws Exception {
+    public ResponseEntity<?> getUserById(@PathVariable Long id) throws Exception {
         return ResponseEntity.ok(userService.findById(id));
     }
+
+    @GetMapping("/user")
+    public ResponseEntity<List<User>> getAllUser(@RequestParam(required = false) String name) {
+        try {
+            List<User> users = new ArrayList<>();
+            authRepository.findAll().forEach(users::add);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

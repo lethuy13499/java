@@ -1,8 +1,7 @@
-package com.jungdo.security.services.impl;
+package com.jungdo.service.impl;
 
 import com.jungdo.entity.User;
 import com.jungdo.repository.AuthRepository;
-import com.jungdo.security.services.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

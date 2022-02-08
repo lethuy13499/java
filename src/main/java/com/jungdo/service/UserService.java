@@ -1,4 +1,4 @@
-package com.jungdo.security.services;
+package com.jungdo.service;
 
 import com.jungdo.entity.User;
 

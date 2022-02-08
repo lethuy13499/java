@@ -1,8 +1,8 @@
-package com.jungdo.security.services.impl;
+package com.jungdo.service.impl;
 
 import com.jungdo.entity.User;
-import com.jungdo.repository.UserRepository;
-import com.jungdo.security.services.UserService;
+import com.jungdo.repository.AuthRepository;
+import com.jungdo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +11,10 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UserRepository userRepository;
+    private AuthRepository authRepository;
 
     @Override
     public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
+        return authRepository.findById(id);
     }
 }
