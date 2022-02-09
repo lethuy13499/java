@@ -2,16 +2,18 @@ package com.jungdo.service.impl;
 
 import com.jungdo.entity.User;
 import com.jungdo.repository.AuthRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 @Service
+@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    AuthRepository userRepository;
+
+    private final AuthRepository userRepository;
 
     @Override
     @Transactional

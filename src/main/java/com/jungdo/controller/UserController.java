@@ -7,12 +7,12 @@ import com.jungdo.payload.request.LoginRequest;
 import com.jungdo.payload.request.SignupRequest;
 import com.jungdo.payload.response.JwtResponse;
 import com.jungdo.payload.response.MessageResponse;
-import com.jungdo.repository.RoleRepository;
 import com.jungdo.repository.AuthRepository;
+import com.jungdo.repository.RoleRepository;
 import com.jungdo.security.jwt.JwtUtils;
 import com.jungdo.service.UserService;
 import com.jungdo.service.impl.UserDetailsImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -32,24 +32,15 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class UserController {
-    @Autowired
-    AuthenticationManager authenticationManager;
 
-    @Autowired
-    AuthRepository authRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    @Autowired
-    PasswordEncoder encoder;
-
-    @Autowired
-    JwtUtils jwtUtils;
-
-    @Autowired
-    UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final AuthRepository authRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder encoder;
+    private final JwtUtils jwtUtils;
+    private final UserService userService;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

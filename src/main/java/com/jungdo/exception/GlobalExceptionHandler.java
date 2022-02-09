@@ -1,4 +1,5 @@
 package com.jungdo.exception;
+
 import com.jungdo.utils.APIResponseUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,14 +42,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
-
     @ExceptionHandler(DataNotFoundException.class)
     public ResponseEntity<Object> handleDataNotFound(Exception ex, WebRequest request) {
         ex.printStackTrace();
         return APIResponseUtils.buildResponse(HttpStatus.NOT_FOUND,
                 ex.getMessage());
     }
-
 
 
 }

@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.ArrayList;
 
-public class BusinessException extends RuntimeException{
+public class BusinessException extends RuntimeException {
     private String errorCode;
     private HttpStatus httpStatus;
     private Object content;

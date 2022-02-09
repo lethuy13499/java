@@ -2,7 +2,7 @@ package com.jungdo.controller;
 
 import com.jungdo.entity.Category;
 import com.jungdo.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import java.util.Optional;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class CategoryController {
-    @Autowired
-    CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @GetMapping("/category")
     public ResponseEntity<List<Category>> getAllCategory(@RequestParam(required = false) String name) {
@@ -53,7 +53,7 @@ public class CategoryController {
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         try {
             Category _category = categoryRepository
-                    .save(new Category(category.getName(), category.getDescription(),1));
+                    .save(new Category(category.getName(), category.getDescription(), 1));
             return new ResponseEntity<>(_category, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -75,7 +75,7 @@ public class CategoryController {
         }
     }
 
-    @PatchMapping ("/category/{id}")
+    @PatchMapping("/category/{id}")
     public ResponseEntity<Category> changeStatusCategory(@PathVariable Long id, @PathVariable Integer status) {
         try {
             Category category = categoryRepository.findById(id).get();
